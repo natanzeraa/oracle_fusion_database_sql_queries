@@ -1,35 +1,49 @@
--- 
+-- BUSCA TODAS AS CLASSES DE PRODUTOS DO PDH
 select
   eicb.ITEM_CLASS_TYPE as TIPO_DA_CLASSE,
   eicb.ITEM_CLASS_CODE as NOME_DA_CLASSE,
+  eicb.PARENT_ITEM_CLASS_ID as CLASSE_PAI,
   case
     when eicb.ENABLED_FLAG = 'Y' then 'ATIVA'
     else 'INATIVA'
   end as STATUS_DA_CLASSE
 from
   egp_item_classes_b eicb
+where eicb.ENABLED_FLAG = 'Y'      
+order by eicb.ITEM_CLASS_CODE asc
 ;
-
-
+ 
+-- BUSCA TOTAL DE CLASSES DE PRODUTOS DO PD
 select
-  msp.SUPPLIER_NAME,
-  msp.CREATED_BY,
-  msp.CREATION_DATE,
-  msp.LAST_UPDATED_BY,
-  msp.LAST_UPDATE_DATE
+  count(*)
 from
-  mss_supplies msp
-
+  (
+    select
+      eicb.ITEM_CLASS_TYPE as TIPO_DA_CLASSE,
+      eicb.ITEM_CLASS_CODE as NOME_DA_CLASSE,
+      case
+        when eicb.ENABLED_FLAG = 'Y' then 'ATIVA'
+        else 'INATIVA'
+      end as STATUS_DA_CLASSE
+    from
+      egp_item_classes_b eicb
+    where eicb.ENABLED_FLAG = 'Y'        
+  )      
 ;
 
-SELECT 
-  ps.creation_source,
-  ps.vendor_type_lookup_code,
-  ps.CREATED_BY,
-  ps.CREATION_DATE,
-  ps.LAST_UPDATED_BY,
-  ps.LAST_UPDATE_DATE
-FROM poz_suppliers ps
-
+-- BUSCA TODAS AS COLUNAS PRESENTES NA TABELA
+SELECT
+  column_name,
+  data_type,
+  data_length,
+  data_precision,
+  data_scale,
+  nullable,
+  data_default
+FROM
+  all_tab_columns
+WHERE
+  table_name = 'egp_item_classes_b'
+ORDER BY
+  column_id
 ;
-
