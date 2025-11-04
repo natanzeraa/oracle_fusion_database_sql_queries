@@ -12,10 +12,27 @@ SELECT
   to_char(
     from_tz(cast(ps.last_update_date as timestamp), 'UTC') at time zone 'America/Sao_Paulo',
     'DD/MM/YYYY HH24:MI:SS'
-  ) as DATA_ATUALIZACAO
+  ) as DATA_ATUALIZACAO    
 FROM
   poz_suppliers ps
   JOIN hz_parties hp ON ps.party_id = hp.party_id
 ORDER BY
   ps.last_update_date DESC
-  ;
+;
+  
+-- BUSCA TODAS AS COLUNAS PRESENTES NA TABELA
+SELECT
+  column_name,
+  data_type,
+  data_length,
+  data_precision,
+  data_scale,
+  nullable,
+  data_default
+FROM
+  all_tab_columns
+WHERE
+  table_name = 'POZ_SUPPLIERS'
+ORDER BY
+  column_id
+;
