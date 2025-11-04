@@ -2,7 +2,7 @@
 -- CLASSE DO ITEM
 -- ITEM_ORG_MESTRE
 -- CODIGO DO ITEM
--- DESCRIÇÃO DO ITEM
+-- DESCRICAO DO ITEM
 
 SELECT
   class_tl.description AS CLASSE_DO_ITEM,
@@ -16,7 +16,7 @@ FROM
     AND esiv.organization_id = esib.organization_id
   JOIN inv_org_parameters iop 
     ON iop.organization_id = esib.organization_id
-  JOIN egp_item_classes_b class 
+  JOIN egp_item_classes_b class     
     ON esib.item_catalog_group_id = class.item_class_id
   JOIN egp_item_classes_tl class_tl 
     ON class.item_class_id = class_tl.item_class_id
@@ -25,8 +25,7 @@ WHERE
   iop.organization_code = 'ITEM_ORG_MESTRE'
 ORDER BY
   esib.item_number
-      
-  ;
+;
   
 -- CONTAGEM TOTAL DE ITENS RETORNADOS PELA CONSULTA
 SELECT COUNT(*) AS TOTAL_ITENS
@@ -55,6 +54,24 @@ ORDER BY
   esib.item_number
 )    
 
+;
+
+-- BUSCA TODAS AS COLUNAS PRESENTES NA TABELA
+SELECT
+  column_name,
+  data_type,
+  data_length,
+  data_precision,
+  data_scale,
+  nullable,
+  data_default
+FROM  
+  all_tab_columns
+WHERE
+  table_name = 'egp_system_items_b'
+ --   and nullable = 'N'
+ORDER BY
+  column_name
 ;
 
 
