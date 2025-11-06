@@ -29,7 +29,7 @@ WHERE
 ORDER BY
   esib.item_number
       
-  ;
+;
   
 -- CONTAGEM TOTAL DE ITENS RETORNADOS PELA CONSULTA
 SELECT COUNT(*) AS TOTAL_ITENS
@@ -69,6 +69,7 @@ FROM (
 )    
 
 ;
+
 
 
 
