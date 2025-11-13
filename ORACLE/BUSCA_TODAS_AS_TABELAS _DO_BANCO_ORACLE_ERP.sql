@@ -4,3 +4,4 @@ WHERE column_name LIKE '%CUSTOMER%'
 ;
 
 
+

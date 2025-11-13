@@ -30,6 +30,7 @@ WHERE
   TRUNC(
     FROM_TZ(CAST(ps.creation_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo'
   ) BETWEEN TO_DATE('01/11/2025', 'DD/MM/YYYY')
-  AND TO_DATE('11/11/2025', 'DD/MM/YYYY')
+  AND TO_DATE('30/11/2025', 'DD/MM/YYYY')
 ORDER BY
   ps.creation_date DESC
+
