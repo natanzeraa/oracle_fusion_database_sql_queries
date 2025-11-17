@@ -1,4 +1,5 @@
 SELECT
+  COUNT(*) OVER() AS TOTAL,
   hp.party_id,
   hp.party_name AS NOME_CLIENTE,
   hp.party_number AS CODIGO_CLIENTE,
@@ -20,8 +21,7 @@ SELECT
   TO_CHAR(
     FROM_TZ(CAST(hcpf.last_update_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo',
     'DD/MM/YYYY HH24:MI:SS'
-  ) AS DATA_ATUALIZACAO,
-  COUNT(*) OVER() AS TOTAL
+  ) AS DATA_ATUALIZACAO
 FROM
   hz_parties hp
   JOIN hz_cust_accounts hca ON hp.party_id = hca.party_id
@@ -32,10 +32,14 @@ FROM
   LEFT JOIN fnd_territories_tl ft_tl ON ft_tl.territory_code = hp.country
   AND ft_tl.language = 'PTB'
 WHERE
-  TRUNC(
+ 1= 1
+/*and TRUNC(
     FROM_TZ(CAST(hcpf.creation_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo'
-  ) BETWEEN TO_DATE('01/11/2025', 'DD/MM/YYYY')
-  AND TO_DATE('30/11/2025', 'DD/MM/YYYY')
+  ) BETWEEN TO_DATE('17/11/2025', 'DD/MM/YYYY')
+  AND TO_DATE('17/11/2025', 'DD/MM/YYYY')*/
+  AND hp.party_number like '%08733109%'   
+--  AND hcpf.created_by = 'leonardo.guilherme@ninecon.com.br'      
+--  AND hp.party_name = 'ABIRUSH AUTOMACAO E SISTEMAS LTDA'   
 ORDER BY
   hcpf.creation_date DESC
-
+        

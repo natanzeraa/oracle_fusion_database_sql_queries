@@ -35,6 +35,7 @@ where
   and esib.approval_status = 'A' 
   -- and esib.inventory_item_status_code = 'Inactive'
   -- and esiv.description like '%BAG VACINA%'
+  and esib.last_updated_by like '%@ninecon%'  
 ORDER BY
   esib.item_number
 ;
@@ -97,3 +98,4 @@ ORDER BY
 
 
   
+

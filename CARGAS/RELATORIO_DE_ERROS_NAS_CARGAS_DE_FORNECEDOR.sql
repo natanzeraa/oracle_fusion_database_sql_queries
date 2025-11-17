@@ -78,8 +78,8 @@ FROM
   LEFT JOIN hz_locations hl ON hps.location_id = hl.location_id
 WHERE
   ps.enabled_flag = 'Y' 
---  and ps.created_by = 'leonardo.gomes@plumaagro.com.br'
-and hp.party_name = 'COMPANHIA PAULISTA DE FORCA E LUZ'
+  and ps.created_by = 'franciele.rossetto@plumaagro.com.br'
+  -- and hp.party_name = 'COMPANHIA PAULISTA DE FORCA E LUZ'
 ORDER BY    
   ps.last_update_date DESC
 ;
@@ -96,4 +96,5 @@ LEFT JOIN hz_organization_profiles hop
        ON hop.party_id = hp.party_id
 WHERE hop.jgzz_fiscal_code = '<CNPJ>'
    OR hop.taxpayer_id = '300000072288240'
+
 

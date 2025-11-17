@@ -1,4 +1,5 @@
 SELECT
+  count(*) over() as total,
   auce.REQUEST_ID,
   auce.CUST_ERROR_ID,
   auce.BATCH_ID,
@@ -25,8 +26,14 @@ SELECT
 FROM
   AR_UPD_CUST_ERRORS auce
 WHERE
-  TRUNC(
+  1 = 1
+  /*TRUNC(
     FROM_TZ(CAST(auce.last_update_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo'
-  ) = TO_DATE('05/11/2025', 'DD/MM/YYYY')    
+  ) = TO_DATE('05/11/2025', 'DD/MM/YYYY')*/
+  AND TRUNC(
+    FROM_TZ(CAST(auce.last_update_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo'
+  ) BETWEEN TO_DATE('17/11/2025', 'DD/MM/YYYY')
+  AND TO_DATE('17/11/2025', 'DD/MM/YYYY')   
 ORDER BY
   auce.last_update_date DESC
+    
