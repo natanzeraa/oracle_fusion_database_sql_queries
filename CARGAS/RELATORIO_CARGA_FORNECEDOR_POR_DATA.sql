@@ -1,41 +1,37 @@
 SELECT
-  count(*) over() as TOTAL,
-  ps.vendor_id,
-  hp.party_name AS NOME_FORNECEDOR,
-  hp.party_number AS PARTE,
-  ps.segment1 AS CODIGO_FORNECEDOR,
-  ps.vendor_type_lookup_code AS TIPO_FORNECEDOR,
-  ps.taxpayer_country AS PAIS_FISCAL,
-  ps.CREATION_SOURCE AS TIPO_CRIACAO,
-  ps.created_by as criado_por,
+  COUNT(*) OVER() AS TOTAL,
+  PS.VENDOR_ID,
+  HP.PARTY_NAME AS NOME_FORNECEDOR,
+  HP.PARTY_NUMBER AS PARTE,
+  PS.SEGMENT1 AS CODIGO_FORNECEDOR,
+  PS.VENDOR_TYPE_LOOKUP_CODE AS TIPO_FORNECEDOR,
+  PS.TAXPAYER_COUNTRY AS PAIS_FISCAL,
+  PS.CREATION_SOURCE AS TIPO_CRIACAO,
+  PS.CREATED_BY AS CRIADO_POR,
   TO_CHAR(
-    FROM_TZ(CAST(ps.creation_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo',
+    FROM_TZ(CAST(PS.CREATION_DATE AS TIMESTAMP), 'UTC') AT TIME ZONE 'AMERICA/SAO_PAULO',
     'DD/MM/YYYY HH24:MI:SS'
   ) AS DATA_CRIACAO,
-  ps.last_updated_by,
+  PS.LAST_UPDATED_BY,
   TO_CHAR(
-    FROM_TZ(CAST(ps.last_update_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo',
+    FROM_TZ(CAST(PS.LAST_UPDATE_DATE AS TIMESTAMP), 'UTC') AT TIME ZONE 'AMERICA/SAO_PAULO',
     'DD/MM/YYYY HH24:MI:SS'
   ) AS DATA_ATUALIZACAO
 FROM
-  poz_suppliers ps
-  LEFT JOIN hz_parties hp ON ps.party_id = hp.party_id  
+  POZ_SUPPLIERS PS
+  LEFT JOIN HZ_PARTIES HP ON PS.PARTY_ID = HP.PARTY_ID
 WHERE
- 1 = 1
+  1 = 1
   /*TRUNC(
-      FROM_TZ(CAST(ps.last_update_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo'
-    )
-    BETWEEN TO_DATE('11/11/2025', 'DD/MM/YYYY')
-        AND TO_DATE('11/11/2025', 'DD/MM/YYYY')
-  */
-  
-  and TRUNC(
-    FROM_TZ(CAST(ps.creation_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo'
+          FROM_TZ(CAST(PS.LAST_UPDATE_DATE AS TIMESTAMP), 'UTC') AT TIME ZONE 'AMERICA/SAO_PAULO'
+        )
+        BETWEEN TO_DATE('11/11/2025', 'DD/MM/YYYY')
+            AND TO_DATE('11/11/2025', 'DD/MM/YYYY')
+      */
+  AND TRUNC(
+    FROM_TZ(CAST(PS.CREATION_DATE AS TIMESTAMP), 'UTC') AT TIME ZONE 'AMERICA/SAO_PAULO'
   ) BETWEEN TO_DATE('01/11/2025', 'DD/MM/YYYY')
-  AND TO_DATE('30/11/2025', 'DD/MM/YYYY')
-  
---  AND ps.created_by = 'leonardo.guilherme@ninecon.com.br'      
- 
+  AND TO_DATE('30/11/2025', 'DD/MM/YYYY') --  AND PS.CREATED_BY = 'LEONARDO.GUILHERME@NINECON.COM.BR'
 ORDER BY
-  ps.creation_date DESC
-  
+  PS.CREATION_DATE DESC
+

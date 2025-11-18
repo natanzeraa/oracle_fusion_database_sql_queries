@@ -33,7 +33,8 @@ WHERE
   AND TRUNC(
     FROM_TZ(CAST(auce.last_update_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo'
   ) BETWEEN TO_DATE('17/11/2025', 'DD/MM/YYYY')
-  AND TO_DATE('17/11/2025', 'DD/MM/YYYY')   
+  AND TO_DATE('18/11/2025', 'DD/MM/YYYY')   
 ORDER BY
   auce.last_update_date DESC
     
+

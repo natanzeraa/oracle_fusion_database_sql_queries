@@ -1,67 +1,60 @@
 /*----------------------------
 
-BUSCA FORNECEDORES E ENDEREÃÂOS 
+BUSCA FORNECEDORES E ENDERECOS 
 
-ESTA CONSULTA RETORNA TODOS OS FORNECEDORES CADASTRADOS NO SISTEMA, INCLUINDO SUAS INFORMAÃÂÃÂES PRINCIPAIS E ENDEREÃÂOS ASSOCIADOS.
-ELA UTILIZA AS TABELAS DE CADASTRO DE FORNECEDOR (POZ_SUPPLIERS), PARTES (HZ_PARTIES), LOCAIS (HZ_PARTY_SITES) E ENDEREÃÂOS (HZ_LOCATIONS). 
+ESTA CONSULTA RETORNA TODOS OS FORNECEDORES CADASTRADOS NO SISTEMA, INCLUINDO SUAS INFORMACOES PRINCIPAIS E ENDERECOS ASSOCIADOS.
+ELA UTILIZA AS TABELAS DE CADASTRO DE FORNECEDOR (POZ_SUPPLIERS), PARTES (HZ_PARTIES), LOCAIS (HZ_PARTY_SITES) E ENDERECOS (HZ_LOCATIONS). 
 
-CADA FORNECEDOR (POZ_SUPPLIERS) ESTÃÂ ASSOCIADO A UMA "PARTE" (HZ_PARTIES), QUE PODE TER UM OU MAIS LOCAIS DE NEGÃÂCIO (HZ_PARTY_SITES). 
-CADA LOCAL, POR SUA VEZ, POSSUI UM ENDEREÃÂO FÃÂSICO (HZ_LOCATIONS).
+CADA FORNECEDOR (POZ_SUPPLIERS) ESTA ASSOCIADO A UMA "PARTE" (HZ_PARTIES), QUE PODE TER UM OU MAIS LOCAIS DE NEGOCIO (HZ_PARTY_SITES). 
+CADA LOCAL, POR SUA VEZ, POSSUI UM ENDERECO FISICO (HZ_LOCATIONS).
 
-UTILIZA JOIN ENTRE ESSAS TABELAS PARA TRAZER NOME, NÃÂMERO DO FORNECEDOR, TIPO, MODO DE CRIAÃÂÃÂO, DATA DE CRIAÃÂÃÂO/ATUALIZAÃÂÃÂO E ENDEREÃÂO.
+UTILIZA JOIN ENTRE ESSAS TABELAS PARA TRAZER NOME, NUMERO DO FORNECEDOR, TIPO, MODO DE CRIACAO, DATA DE CRIACAO/ATUALIZACAO E ENDERECO.
 
-FONTE: https://docs.oracle.com/en/cloud/saas/procurement/24b/oedsc/pozsuppliers-27481.html
+fonte: https://docs.oracle.com/en/cloud/saas/procurement/24b/oedsc/pozsuppliers-27481.html
 ----------------------------*/
-SELECT
-  hp.party_name AS FORNECEDOR,
-  ps.segment1 AS NUMERO_FORNECEDOR,
-  ps.creation_source as MODO_DE_CRIACAO,
-  ps.vendor_type_lookup_code as TIPO,
-  ps.created_by AS CRIADO_POR,
-  TO_CHAR(
-    FROM_TZ(CAST(ps.creation_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo',
-    'DD/MM/YYYY HH24:MI:SS'
-  ) AS data_criacao,
-  ps.last_updated_by AS quem_atualizou,
-  TO_CHAR(
-    FROM_TZ(CAST(ps.last_update_date AS TIMESTAMP), 'UTC') AT TIME ZONE 'America/Sao_Paulo',
-    'DD/MM/YYYY HH24:MI:SS'
-  ) AS data_atualizacao,
-  hps.party_site_name AS SITE,
-  hl.address1 || NVL2(hl.address2, ', ' || hl.address2, '') || NVL2(hl.address3, ', ' || hl.address3, '') AS endereco,
-  hl.city AS cidade,
-  hl.state AS estado,
-  hl.postal_code AS cep,
-  hl.country AS pais
-FROM
+
+select
+  count(*) over() as total,
+  hp.party_name as fornecedor,
+  ps.segment1 as numero_fornecedor,
+  ps.creation_source as modo_de_criacao,
+  ps.vendor_type_lookup_code as tipo,
+  -- ps.EXTERNAL_SYSTEM as SISTEMA_EXTERNO,  
+  ps.created_by as criado_por,
+  to_char(
+    from_tz(cast(ps.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo',
+    'dd/mm/yyyy hh24:mi:ss'
+  ) as data_criacao,
+  ps.last_updated_by as quem_atualizou,
+  to_char(
+    from_tz(cast(ps.last_update_date as timestamp), 'utc') at time zone 'america/sao_paulo',
+    'dd/mm/yyyy hh24:mi:ss'
+  ) as data_atualizacao,
+  hps.party_site_name as site,
+  hl.address1 || nvl2(hl.address2, ', ' || hl.address2, '') || nvl2(hl.address3, ', ' || hl.address3, '') as endereco,
+  hl.city as cidade,
+  hl.state as estado,
+  hl.postal_code as cep,
+  hl.country as pais
+from
   poz_suppliers ps
-  JOIN hz_parties hp ON ps.party_id = hp.party_id
-  LEFT JOIN hz_party_sites hps ON hp.party_id = hps.party_id
-  LEFT JOIN hz_locations hl ON hps.location_id = hl.location_id
-WHERE
+  join hz_parties hp on ps.party_id = hp.party_id  
+  left join hz_party_sites hps on hp.party_id = hps.party_id
+  left join hz_locations hl on hps.location_id = hl.location_id
+where
   1 = 1
   and ps.enabled_flag = 'Y' 
-  --  and ps.created_by = 'leonardo.gomes@plumaagro.com.br'
-  and ps.last_updated_by = 'natan.oliveira@plumaagro.com.br'
-ORDER BY
-  ps.last_update_date DESC
-;
-
--- BUSCA TODAS AS COLUNAS PRESENTES NA TABELA
-SELECT
-  column_name,
-  data_type,
-  data_length,
-  data_precision,
-  data_scale,
-  nullable,
-  data_default
-FROM  
-  all_tab_columns
-WHERE
-  table_name = 'POZ_SUPPLIERS'
-ORDER BY
-  column_id
+  -- and hp.party_name = upper('MUNICIPIO DE FAXINAL DOS GUEDES')    
+  -- and ps.created_by = 'leonardo.gomes@plumaagro.com.br'
+  and ps.last_updated_by = 'franciele.rossetto@plumaagro.com.br' 
+  and trunc(
+    from_tz(cast(ps.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo'
+  ) between to_date('18/11/2025', 'dd/mm/yyyy')
+  and to_date('18/11/2025', 'dd/mm/yyyy')    
+  -- and hl.address1 is null      
+order by
+  ps.last_update_date desc
+   
 ;
 
 
