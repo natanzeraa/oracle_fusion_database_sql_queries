@@ -27,12 +27,13 @@ from
   left join hz_locations hl on hps.location_id = hl.location_id
 where
   1 = 1
-  and ps.enabled_flag = 'Y' 
+  -- and ps.enabled_flag = 'Y' 
   -- and hp.party_name = upper('MUNICIPIO DE FAXINAL DOS GUEDES')    
   -- and ps.created_by = 'leonardo.gomes@plumaagro.com.br'
   -- and ps.last_updated_by = 'franciele.rossetto@plumaagro.com.br' 
   -- and trunc(from_tz(cast(ps.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo') between to_date('18/11/2025', 'dd/mm/yyyy') and to_date('18/11/2025', 'dd/mm/yyyy')    
   -- and hl.address1 is null      
 order by
-  ps.last_update_date desc
+  ps.creation_date desc,
+  ps.last_update_date desc  
 
