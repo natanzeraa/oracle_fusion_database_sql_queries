@@ -29,7 +29,7 @@ from
 where
   1 = 1
   and trunc(from_tz(cast(pscai.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo') between to_date('19/11/2025', 'dd/mm/yyyy') and to_date('19/11/2025', 'dd/mm/yyyy')  
-  -- and pscai.import_status = 'REJECTED'        
+  and pscai.import_status = 'PROCESSED'          
 order by
   pscai.creation_date desc
-  
+
