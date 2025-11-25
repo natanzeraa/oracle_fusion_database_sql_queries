@@ -28,6 +28,7 @@ from
 where
   1 = 1
   and ps.enabled_flag = 'Y' 
+  -- and ps.vendor_type_lookup_code = 'TRANSPORTADOR'
   -- and hp.party_name = upper('MUNICIPIO DE FAXINAL DOS GUEDES')    
   -- and ps.created_by = 'leonardo.gomes@plumaagro.com.br'
   -- and ps.last_updated_by = 'franciele.rossetto@plumaagro.com.br' 
@@ -35,4 +36,6 @@ where
   -- and hl.address1 is null      
 order by
   ps.last_update_date desc
+  
+
 

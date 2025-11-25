@@ -30,9 +30,10 @@ where
       */
   and trunc(
     from_tz(cast(ps.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo'
-  ) between to_date('10/11/2025', 'dd/mm/yyyy')
-  and to_date('10/11/2025', 'dd/mm/yyyy') 
+  ) between to_date('01/11/2025', 'dd/mm/yyyy')
+  and to_date('30/11/2025', 'dd/mm/yyyy') 
   --  and ps.created_by = 'leonardo.guilherme@ninecon.com.br'
 order by
   ps.creation_date desc
+
 

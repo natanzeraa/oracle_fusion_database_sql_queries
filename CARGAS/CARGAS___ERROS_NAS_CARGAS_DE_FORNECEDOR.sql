@@ -1,4 +1,3 @@
--- busca os erros de importacao da tabela de fornecedor
 select
   count(*) over() as total,
   psir.rejection_id,
@@ -20,7 +19,9 @@ from
   poz_supplier_int_rejections psir
 where
   1 = 1
-  and trunc(from_tz(cast(psir.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo') between to_date('19/11/2025', 'dd/mm/yyyy') and to_date('19/11/2025', 'dd/mm/yyyy')
+  and trunc(from_tz(cast(psir.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo') between to_date('24/11/2025', 'dd/mm/yyyy') and to_date('30/11/2025', 'dd/mm/yyyy')
 order by
   psir.creation_date desc
+
+
 
