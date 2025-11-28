@@ -59,7 +59,7 @@ with base as (
     -- and hp.party_id = '300000014686830'
     -- and (ps.vendor_id is not null and hca.cust_account_id is null) -- somente fornecedor
     -- and (ps.vendor_id is not null and hca.cust_account_id is not null) -- somente clifor
-    -- and hp.party_name like '%COPEL%'
+    -- and hp.party_name like '%MUNICIPIO%'
     -- and trunc(from_tz(cast(hp.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo') between to_date('18/11/2025', 'dd/mm/yyyy') and to_date('18/11/2025', 'dd/mm/yyyy') -- Parte
     -- and trunc(from_tz(cast(hca.creation_date as timestamp), 'utc') at time zone 'america/sao_paulo') between to_date('18/11/2025', 'dd/mm/yyyy') and to_date('18/11/2025', 'dd/mm/yyyy') -- Cliente
     -- and trunc(from_tz(cast(ps.last_update_date as timestamp), 'utc') at time zone 'america/sao_paulo') between to_date('13/11/2025', 'dd/mm/yyyy') and to_date('30/11/2025', 'dd/mm/yyyy') -- Fornecedor   
@@ -75,5 +75,7 @@ select *
 from base
 where rn = 1
 order by data_atualizacao desc
+
+
 
 
