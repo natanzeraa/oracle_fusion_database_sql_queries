@@ -1,7 +1,7 @@
-select count(*) over() 		as total
-  ,esib.item_number 		as codigo_do_item
-  ,esiv.description 		as descricao_do_item
-  ,esib.unit_of_issue 		as unidade_de_medida
+select count(*) over() 		  as total
+  ,esib.item_number 		    as codigo_do_item
+  ,esiv.description 		    as descricao_do_item
+  ,esib.unit_of_issue 		   as unidade_de_medida
   ,class_tl.description 	as classe_do_item
   ,iop.organization_code 	as organizacao
   ,eict.category_set_name 	as tipo_categoria
